@@ -1,0 +1,54 @@
+{{ define "main" }}
+<article class="space-y-8">
+    <header class="text-center space-y-4">
+        <h1 class="text-4xl font-bold">{{ .Title }}</h1>
+        {{ with .Date }}
+        <time datetime="{{ .Format "2006-01-02" }}" class="text-gray-600 dark:text-gray-400">
+            {{ .Format "02/01/2006" }}
+        </time>
+        {{ end }}
+    </header>
+
+    {{ if .Content }}
+    <div class="prose dark:prose-invert max-w-none">
+        {{ .Content }}
+    </div>
+    {{ end }}
+
+    {{ if .Params.gallery }}
+    <div id="gallery" class="gallery-grid">
+        {{ range .Resources.Match "*.jpg" }}
+        <a 
+            href="{{ .RelPermalink }}" 
+            class="gallery-item"
+            data-src="{{ .RelPermalink }}"
+            data-sub-html="<h4>{{ .Name }}</h4>"
+        >
+            <img 
+                src="{{ .RelPermalink }}" 
+                alt="{{ .Name }}"
+                class="gallery-image"
+                loading="lazy"
+            >
+            <div class="gallery-caption">
+                {{ .Name }}
+            </div>
+        </a>
+        {{ end }}
+    </div>
+    {{ end }}
+
+    <div class="flex justify-center space-x-4">
+        {{ with .PrevInSection }}
+        <a href="{{ .RelPermalink }}" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+            &larr; {{ .Title }}
+        </a>
+        {{ end }}
+        {{ with .NextInSection }}
+        <a href="{{ .RelPermalink }}" class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600">
+            {{ .Title }} &rarr;
+        </a>
+        {{ end }}
+    </div>
+</article>
+{{ end }}

@@ -1,0 +1,74 @@
+
+### Cahier des charges - Galerie Photo avec Hugo
+# Cahier des charges - Galerie Photo avec Hugo
+
+## 1. Objectif du projet
+
+Créer un site statique avec Hugo permettant d'afficher une galerie photo organisée en plusieurs sous-galeries, facile à maintenir et esthétiquement agréable.
+
+## 2. Structure générale
+
+- **Page d'accueil** : Présente une grille des sous-galeries disponibles (ex. "Paysages", "Portraits", "Voyages"). Chaque sous-galerie présentera une miniature d'une des photos présentes dans la galerie.
+- **Sous-galeries** : Chaque sous-galerie affiche une collection spécifique de photos avec leurs propres vignettes.
+- **Navigation** : Menu ou liens permettant de passer facilement d'une sous-galerie à une autre, et un lien pour revenir à la page d'accueil.
+
+## 3. Mise en page
+
+- **Vue des sous-galeries (page d'accueil)** : Une grille de vignettes représentant chaque sous-galerie (ex. une image emblématique par sous-galerie avec son titre). Le choix de la photo sera fait en fonction d'un paramètre weight de chaque photo. Plus le weight est faible plus la photo est prioritaire. Si plusieurs photos ont le même weight, alors une d'elles sera choisie aléatoirement. Les sous-galeries seront affichées dans l'ordre correspondant à leur date de création.
+- **Layout de type mosaïque (masonry)** : Les miniatures des sous-galeries sur la page d'accueil et les photos dans chaque sous-galerie s'arrangeront automatiquement pour occuper l'espace disponible de façon optimale, tout en respectant l'ordre de priorité (weight ou date). Ce type de layout permettra de s'adapter aux différentes tailles et orientations des images, tout en créant une présentation visuellement harmonieuse.
+- **Vue à l'intérieur d'une sous-galerie** : Une grille d'images sous forme de lightbox. Comme pour les sous-galeries de la page d'accueil, les photos seront présentées dans un ordre qui correspond à leur weight (aléatoirement si plusieurs photos ont le même weight). La collection de photos sera présentée sous forme de lightbox avec un espace minimal entre les photos. Si on clique sur une photo, elle sera affichée en plus grand et il sera alors possible de naviguer vers l'image suivante ou précédente ou revenir à la galerie.
+- **Adaptabilité** : Design responsive pour mobile, tablette et desktop.
+
+## 4. Fonctionnalités
+
+- **Affichage des photos** : Chaque photo est cliquable et s'ouvre dans une lightbox pour une vue en plein écran.
+- **Métadonnées** : Chaque photo peut avoir un titre et une description optionnelle (affichée sous la vignette ou dans la lightbox). Ces métadonnées seront extraites des EXIF grâce aux fonctionnalités d'image processing d'Hugo, incluant spécifiquement:
+    - Date de prise de vue
+    - Appareil photo utilisé
+    - Focale
+    - Ouverture
+    - Temps de pose
+    - Le nom du fichier sera utilisé comme nom de la photo si aucun titre n'est spécifié
+- **Gestion des EXIF manquants** : Si certaines métadonnées EXIF sont absentes ou incomplètes, le système affichera uniquement celles disponibles sans générer d'erreur
+- **Sous-galeries multiples** : Possibilité de créer facilement de nouvelles sous-galeries en ajoutant des dossiers dans `content/`.
+- **Tri ou filtres** (optionnel) : Possibilité de trier les photos dans une sous-galerie (par date, par nom) ou de filtrer par tags (ex. "Noir et blanc", "2024").
+- **Diaporama** : Fonctionnalité permettant de visualiser automatiquement les photos d'une sous-galerie avec un délai ajustable entre 10 et 60 secondes.
+- **Téléchargement** : Possibilité de télécharger l'image originale (haute résolution).
+- **Partage** : Fonctionnalités de partage sur les principaux réseaux sociaux (Facebook, Twitter, Instagram, Pinterest) et option de copie de lien direct vers la photo ou la sous-galerie.
+
+## 5. Contenu et organisation des fichiers
+
+- **Structure** : Les photos seront organisées dans le dossier `content/` d'Hugo, où chaque sous-dossier représentera une sous-galerie.
+- **Nommage** : Le nom du sous-dossier sera utilisé comme nom de la sous-galerie.
+- **Génération** : Lors de la génération du site, Hugo traitera chaque image pour extraire les métadonnées EXIF et générer les miniatures nécessaires.
+
+## 6. Style
+
+- **Esthétique** : Minimaliste, avec une palette de couleurs neutres (ex. gris, blanc, noir) pour mettre en valeur les photos.
+- **Mode sombre/clair** : Possibilité de passer d'un mode clair à un mode sombre. Le choix sera enregistré pour les prochaines visites (via localStorage) et ne suivra pas automatiquement les préférences système.
+- **Animations** : Effet de survol léger sur les vignettes (ex. zoom ou légère opacité).
+- **Typographie** : Police simple et lisible (ex. Roboto, Open Sans).
+- **CSS** : Utilisation de TailwindCSS.
+
+## 7. Contraintes techniques
+
+- **Framework** : Utilisation de Hugo comme générateur de site statique.
+- **Architecture** : Pas de dépendance à une base de données ou à un backend dynamique.
+- **Performance** :
+    - Chargement rapide des pages, même avec plusieurs dizaines de photos par sous-galerie.
+    - Génération de formats d'image optimisés (WebP) avec fallback JPEG pour les navigateurs non compatibles.
+    - Lazy loading pour charger uniquement les images visibles dans la zone d'affichage.
+    - Configuration des headers HTTP pour optimiser la mise en cache côté client.
+- **Traitement d'images** : Les miniatures et conversions de format seront créées avec les fonctionnalités d'image processing d'Hugo.
+- **Déploiement** : Compatible avec le service Pages de Cloudflare.
+- **Évolutivité** : Pas de nombre limite de photos par sous-galerie ni de limite de sous-galeries.
+- **Pagination** : Pas de pagination pour les sous-galeries, utilisation du lazy loading à la place.
+
+## 8. SEO et Accessibilité
+
+- **Attributs ALT** : Chaque image disposera d'un attribut alt descriptif, généré à partir du titre de l'image ou du nom de fichier.
+- **Contraste** : Respect des normes de contraste pour garantir une bonne lisibilité.
+- **Navigation au clavier** : Navigation complète possible via clavier pour une meilleure accessibilité.
+- **Métadonnées SEO** : Génération de balises meta appropriées pour chaque page.
+- **Sitemap** : Génération automatique d'un sitemap XML pour améliorer l'indexation par les moteurs de recherche.
+- **Schema.org** : Utilisation des microformats schema.org pour les galeries d'images afin d'améliorer la visibilité dans les résultats de recherche.

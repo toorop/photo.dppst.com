@@ -1,0 +1,30 @@
+{
+  "name": "photo.dppst.com",
+  "version": "1.0.0",
+  "description": "Galerie photo personnelle",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "dev": "hugo server --disableFastRender",
+    "build": "hugo --gc --minify",
+    "start": "hugo server",
+    "build:css": "postcss assets/css/main.css -o static/css/style.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "hugo",
+    "gallery",
+    "photo"
+  ],
+  "author": "DPPST",
+  "license": "ISC",
+  "devDependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.3.2"
+  }
+}

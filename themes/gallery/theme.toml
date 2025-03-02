@@ -1,0 +1,10 @@
+name = "Gallery"
+license = "MIT"
+licenselink = "https://github.com/yourusername/hugo-gallery/blob/master/LICENSE"
+description = "A responsive photo gallery theme for Hugo"
+homepage = "https://photo.dppst.com/"
+min_version = "0.80.0"
+
+[author]
+  name = "DPPST"
+  homepage = "https://dppst.com"

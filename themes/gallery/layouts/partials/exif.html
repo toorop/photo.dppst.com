@@ -1,0 +1,22 @@
+{{ with .Exif }}
+<div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
+    {{ with .Tags.DateTime }}
+    <p><span class="font-semibold">Date:</span> {{ . }}</p>
+    {{ end }}
+    {{ with .Tags.Make }}{{ with $.Exif.Tags.Model }}
+    <p><span class="font-semibold">Appareil:</span> {{ $.Exif.Tags.Make }} {{ . }}</p>
+    {{ end }}{{ end }}
+    {{ with .Tags.FocalLength }}
+    <p><span class="font-semibold">Focale:</span> {{ . }}</p>
+    {{ end }}
+    {{ with .Tags.FNumber }}
+    <p><span class="font-semibold">Ouverture:</span> f/{{ . }}</p>
+    {{ end }}
+    {{ with .Tags.ExposureTime }}
+    <p><span class="font-semibold">Vitesse:</span> {{ . }}</p>
+    {{ end }}
+    {{ with .Tags.ISOSpeedRatings }}
+    <p><span class="font-semibold">ISO:</span> {{ . }}</p>
+    {{ end }}
+</div>
+{{ end }}

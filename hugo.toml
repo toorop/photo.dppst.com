@@ -1,0 +1,22 @@
+baseURL = 'https://photo.dppst.com/'
+languageCode = 'fr-fr'
+title = 'Galerie Photo'
+theme = 'gallery'
+
+[params]
+  description = "Ma galerie photo personnelle"
+  defaultTheme = "light"
+  
+[imaging]
+  quality = 85
+  resampleFilter = "Lanczos"
+  anchor = "Smart"
+
+[markup.goldmark.renderer]
+  unsafe = true
+
+[build]
+  writeStats = true
+
+[taxonomies]
+  tag = "tags"
