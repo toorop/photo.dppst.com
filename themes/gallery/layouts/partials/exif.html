@@ -3,14 +3,21 @@
     <div class="exif-data">
         {{ with .Tags.DateTimeOriginal }}
             {{ $parts := split . " " }}
-            {{ $datePart := index $parts 0 }}
-            {{ $timePart := index $parts 1 }}
-            {{ $dateParts := split $datePart ":" }}
-            {{ $year := index $dateParts 0 }}
-            {{ $month := index $dateParts 1 }}
-            {{ $day := index $dateParts 2 }}
-            {{ $isoDate := printf "%s-%s-%sT%s" $year $month $day $timePart }}
-            <span><span class="exif-label">Date:</span> {{ dateFormat "02/01/2006 à 15:04" $isoDate }} -</span>
+            {{ if ge (len $parts) 2 }}
+                {{ $datePart := index $parts 0 }}
+                {{ $timePart := index $parts 1 }}
+                {{ $dateParts := split $datePart ":" }}
+                {{ if ge (len $dateParts) 3 }}
+                    {{ $year := index $dateParts 0 }}
+                    {{ $month := index $dateParts 1 }}
+                    {{ $day := index $dateParts 2 }}
+                    {{ $isoDate := printf "%s-%s-%sT%s" $year $month $day $timePart }}
+                    {{ $validDate := time $isoDate }}
+                    {{ if not (eq $validDate.Year 1) }}
+                        <span><span class="exif-label">Date:</span> {{ dateFormat "02/01/2006 à 15:04" $validDate }} -</span>
+                    {{ end }}
+                {{ end }}
+            {{ end }}
         {{ end }}
         
         {{ with .Tags.Make }}{{ with $.Exif.Tags.Model }}
@@ -18,19 +25,27 @@
         {{ end }}{{ end }}
         
         {{ with .Tags.FocalLength }}
-            <span><span class="exif-label">Focale:</span> {{ math.Round (float . ) }}mm -</span>
+            {{ if ne . "" }}
+                <span><span class="exif-label">Focale:</span> {{ math.Round (float . ) }}mm -</span>
+            {{ end }}
         {{ end }}
         
         {{ with .Tags.FNumber }}
-            <span><span class="exif-label">Ouverture:</span> f/{{ printf "%.1f" (float .) }} -</span>
+            {{ if ne . "" }}
+                <span><span class="exif-label">Ouverture:</span> f/{{ printf "%.1f" (float .) }} -</span>
+            {{ end }}
         {{ end }}
         
         {{ with .Tags.ExposureTime }}
-            <span><span class="exif-label">Vitesse:</span> {{ . }} -</span>
+            {{ if ne . "" }}
+                <span><span class="exif-label">Vitesse:</span> {{ . }} -</span>
+            {{ end }}
         {{ end }}
         
         {{ with .Tags.ISOSpeedRatings }}
-            <span><span class="exif-label">ISO:</span> {{ . }}</span>
+            {{ if ne . "" }}
+                <span><span class="exif-label">ISO:</span> {{ . }}</span>
+            {{ end }}
         {{ end }}
     </div>
 </div>
