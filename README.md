@@ -89,6 +89,14 @@ Le fichier `hugo.toml` contient la configuration principale du site, y compris :
 - Les champs EXIF à extraire
 - Les paramètres de cache et de sécurité
 
+### Paramètres d'optimisation des images
+
+Les paramètres suivants dans `hugo.toml` contrôlent l'optimisation des images :
+
+- `quality` : Définit la qualité de la compression JPEG (par défaut : 85). Une valeur plus basse réduit la taille du fichier, mais peut affecter la qualité de l'image.
+- `resampleFilter` : Spécifie le filtre de rééchantillonnage utilisé lors du redimensionnement des images (par défaut : "Lanczos").
+- `anchor` : Définit le point d'ancrage pour le recadrage des images (par défaut : "Smart").
+
 ## Optimisation
 
 Les images sont automatiquement :
