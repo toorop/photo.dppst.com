@@ -6,25 +6,59 @@
   body {
     @apply bg-white text-gray-900 dark:bg-neutral-900 dark:text-gray-100 min-h-screen;
   }
+  
+  /* Styles de base pour les titres et le texte */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+  }
+  
+  p {
+    @apply mb-4;
+  }
 }
 
 @layer components {
+  /* Composants de la galerie */
   .gallery-grid {
-    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4;
+    @apply mt-10;
+    width: 100%;
   }
   
   .gallery-item {
-    @apply relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300;
+    @apply relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02];
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  /* Responsive sizing for gallery items */
+  @media (min-width: 640px) {
+    .gallery-item {
+      width: calc(50% - 8px);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .gallery-item {
+      width: calc(33.333% - 11px);
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .gallery-item {
+      width: calc(25% - 12px);
+    }
   }
   
   .gallery-image {
-    @apply w-full h-48 sm:h-64 object-cover;
+    @apply w-full h-auto object-cover;
+    display: block;
   }
   
   .gallery-caption {
     @apply absolute bottom-0 left-0 right-0 p-4 bg-black bg-opacity-50 text-white;
   }
   
+  /* Composants de navigation */
   .site-nav {
     @apply bg-white dark:bg-neutral-900 shadow-sm fixed w-full z-50;
   }
@@ -41,20 +75,36 @@
     @apply text-xl font-semibold text-gray-900 dark:text-gray-100 flex items-center;
   }
 
+  /* Composants de contenu */
   .main-content {
     @apply pt-20 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto;
   }
 
+  /* Composants d'en-tête */
+  .page-header {
+    @apply text-center mb-10;
+  }
+
+  .page-title {
+    @apply text-4xl font-bold mb-4;
+  }
+
+  .page-date {
+    @apply text-gray-600 dark:text-gray-400 block;
+  }
+
+  /* Composants de pied de page */
   .site-footer {
-    @apply bg-white dark:bg-neutral-900 shadow-sm mt-8;
+    @apply bg-white dark:bg-neutral-900 shadow-sm mt-12;
   }
 
   .footer-content {
     @apply max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 text-center text-gray-600 dark:text-gray-400;
   }
 
+  /* Composants de thème */
   .theme-toggle {
-    @apply fixed bottom-4 right-4 p-2 rounded-full bg-white dark:bg-neutral-800 shadow-lg z-50;
+    @apply fixed top-4 right-4 p-2 rounded-full bg-white dark:bg-neutral-800 shadow-lg z-[60];
   }
 
   .theme-icon {
@@ -69,6 +119,7 @@
     @apply block dark:hidden;
   }
 
+  /* Composants de navigation entre pages */
   .nav-buttons-container {
     @apply grid grid-cols-3 gap-4 mt-8 max-w-4xl mx-auto px-4;
   }
@@ -87,6 +138,72 @@
 
   .nav-button span {
     @apply truncate max-w-[200px];
+  }
+
+  /* Composants d'article */
+  .article-content {
+    @apply space-y-8;
+  }
+
+  /* Style pour le contenu de l'article */
+  .prose {
+    @apply text-lg leading-relaxed;
+  }
+  
+  /* Style spécifique pour la description de la galerie */
+  .prose p {
+    @apply text-center text-lg mb-8 max-w-3xl mx-auto;
+  }
+
+  /* Composants de pagination */
+  .pagination-container {
+    @apply flex items-center space-x-4 justify-center mt-12;
+  }
+
+  .pagination-link {
+    @apply px-4 py-2 bg-neutral-200 dark:bg-neutral-800 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-700 transition-colors duration-200;
+  }
+
+  /* Composants EXIF */
+  .exif-container {
+    @apply p-4 bg-black/80 rounded-lg mt-2 text-sm;
+  }
+
+  .exif-data {
+    @apply flex flex-wrap gap-x-4 gap-y-2 items-center text-gray-800;
+  }
+
+  .exif-label {
+    @apply font-semibold text-gray-400;
+  }
+
+  .exif-value {
+    @apply font-semibold text-white;
+  }
+
+  /* Composants de partage */
+  .share-container {
+    @apply flex justify-center space-x-4;
+  }
+
+  .share-link-facebook {
+    @apply text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-200;
+  }
+
+  .share-link-twitter {
+    @apply text-blue-400 hover:text-blue-600 dark:text-blue-300 dark:hover:text-blue-100;
+  }
+
+  .share-link-copy {
+    @apply text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200;
+  }
+
+  .share-icon {
+    @apply w-6 h-6;
+  }
+
+  .sr-only {
+    @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
   }
 
   /* LightGallery Dark Mode */
@@ -124,16 +241,13 @@
   }
 
   /* Masquer les contrôles quand la souris ne bouge pas */
-  .lg-toolbar,
-  .lg-actions .lg-next,
-  .lg-actions .lg-prev {
-    opacity: 0.8;
-    transition: opacity 0.15s ease-in-out;
+  .lg-outer.lg-hide-items .lg-toolbar {
+    opacity: 0;
+    transform: translateY(-10px);
   }
 
-  .lg-toolbar:hover,
-  .lg-actions .lg-next:hover,
-  .lg-actions .lg-prev:hover {
-    opacity: 1;
+  .lg-outer.lg-hide-items .lg-actions .lg-prev,
+  .lg-outer.lg-hide-items .lg-actions .lg-next {
+    opacity: 0;
   }
 }

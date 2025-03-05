@@ -1,22 +1,37 @@
 {{ with .Exif }}
-<div class="text-sm text-gray-600 dark:text-gray-400 space-y-1">
-    {{ with .Tags.DateTime }}
-    <p><span class="font-semibold">Date:</span> {{ . }}</p>
-    {{ end }}
-    {{ with .Tags.Make }}{{ with $.Exif.Tags.Model }}
-    <p><span class="font-semibold">Appareil:</span> {{ $.Exif.Tags.Make }} {{ . }}</p>
-    {{ end }}{{ end }}
-    {{ with .Tags.FocalLength }}
-    <p><span class="font-semibold">Focale:</span> {{ . }}</p>
-    {{ end }}
-    {{ with .Tags.FNumber }}
-    <p><span class="font-semibold">Ouverture:</span> f/{{ . }}</p>
-    {{ end }}
-    {{ with .Tags.ExposureTime }}
-    <p><span class="font-semibold">Vitesse:</span> {{ . }}</p>
-    {{ end }}
-    {{ with .Tags.ISOSpeedRatings }}
-    <p><span class="font-semibold">ISO:</span> {{ . }}</p>
-    {{ end }}
+<div class="exif-container">
+    <div class="exif-data">
+        {{ with .Tags.DateTimeOriginal }}
+            {{ $parts := split . " " }}
+            {{ $datePart := index $parts 0 }}
+            {{ $timePart := index $parts 1 }}
+            {{ $dateParts := split $datePart ":" }}
+            {{ $year := index $dateParts 0 }}
+            {{ $month := index $dateParts 1 }}
+            {{ $day := index $dateParts 2 }}
+            {{ $isoDate := printf "%s-%s-%sT%s" $year $month $day $timePart }}
+            <span><span class="exif-label">Date:</span> {{ dateFormat "02/01/2006 à 15:04" $isoDate }} -</span>
+        {{ end }}
+        
+        {{ with .Tags.Make }}{{ with $.Exif.Tags.Model }}
+            <span><span class="exif-label">Appareil:</span> {{ $.Exif.Tags.Make }} {{ . }} -</span>
+        {{ end }}{{ end }}
+        
+        {{ with .Tags.FocalLength }}
+            <span><span class="exif-label">Focale:</span> {{ math.Round (float . ) }}mm -</span>
+        {{ end }}
+        
+        {{ with .Tags.FNumber }}
+            <span><span class="exif-label">Ouverture:</span> f/{{ printf "%.1f" (float .) }} -</span>
+        {{ end }}
+        
+        {{ with .Tags.ExposureTime }}
+            <span><span class="exif-label">Vitesse:</span> {{ . }} -</span>
+        {{ end }}
+        
+        {{ with .Tags.ISOSpeedRatings }}
+            <span><span class="exif-label">ISO:</span> {{ . }}</span>
+        {{ end }}
+    </div>
 </div>
 {{ end }}

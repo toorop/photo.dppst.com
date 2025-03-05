@@ -15,14 +15,6 @@
                         loading="lazy"
                     >
                 {{ end }}
-                <div class="gallery-caption">
-                    <h2 class="text-lg font-semibold">{{ .Title }}</h2>
-                    {{ with .Date }}
-                    <time datetime="{{ .Format "2006-01-02" }}" class="text-sm opacity-75">
-                        {{ .Format "02/01/2006" }}
-                    </time>
-                    {{ end }}
-                </div>
             </a>
             {{ end }}
         {{ end }}

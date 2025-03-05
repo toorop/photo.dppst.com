@@ -4,12 +4,23 @@ Un site de galerie photo statique construit avec Hugo et TailwindCSS.
 
 ## Fonctionnalités
 
-- Galerie photo responsive avec layout masonry
-- Mode sombre/clair
+- Galerie photo responsive avec layout masonry adaptatif
+- Mode sombre/clair avec bouton de bascule
 - Affichage des métadonnées EXIF
-- Lightbox pour la visualisation des photos
+- Lightbox pour la visualisation des photos avec diaporama automatique
 - Optimisation des images (WebP, lazy loading)
 - Partage sur les réseaux sociaux
+- Interface utilisateur moderne et élégante
+- Mise en page adaptative pour tous les appareils
+
+## Technologies utilisées
+
+- **Hugo** : Générateur de site statique
+- **TailwindCSS** : Framework CSS utilitaire
+- **PostCSS** : Processeur CSS
+- **Masonry** : Bibliothèque JavaScript pour la mise en page en mosaïque
+- **LightGallery** : Bibliothèque JavaScript pour la visualisation des photos
+- **imagesLoaded** : Bibliothèque JavaScript pour la gestion du chargement des images
 
 ## Installation
 
@@ -77,6 +88,7 @@ Un site de galerie photo statique construit avec Hugo et TailwindCSS.
 - **Taille des images** : Les images originales peuvent être de grande taille, Hugo les optimisera automatiquement
 - **Métadonnées EXIF** : Les métadonnées EXIF sont automatiquement extraites et affichées (appareil photo, paramètres de prise de vue, etc.)
 - **Ordre d'affichage** : Pour contrôler l'ordre des photos, préfixez les noms avec des numéros, par exemple : `01-premiere-photo.jpg`
+- **Formats de photos** : La galerie gère correctement les photos en format portrait et paysage, les présentant de manière esthétique dans une mosaïque adaptative
 
 ## Structure des contenus
 
@@ -104,3 +116,19 @@ Les images sont automatiquement :
 - Converties en WebP avec fallback JPEG
 - Chargées en lazy loading
 - Mises en cache via les headers HTTP
+
+## Mise en page et style
+
+Le site utilise TailwindCSS avec le plugin Typography pour une mise en page élégante et cohérente. Les styles principaux sont définis dans `assets/css/main.css` et sont compilés avec PostCSS.
+
+### Mosaïque adaptative
+
+La galerie utilise Masonry pour créer une mosaïque adaptative qui :
+- S'ajuste automatiquement en fonction de la taille des images
+- Préserve les proportions originales des photos
+- S'adapte à différentes tailles d'écran (responsive)
+- Crée un rendu esthétique quelle que soit l'orientation des photos
+
+### Mode sombre/clair
+
+Le site propose un mode sombre et un mode clair, avec un bouton de bascule en haut à droite de l'écran. Le choix de l'utilisateur est enregistré dans le localStorage pour être conservé lors des visites ultérieures.

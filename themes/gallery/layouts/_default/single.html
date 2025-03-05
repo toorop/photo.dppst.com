@@ -1,9 +1,9 @@
 {{ define "main" }}
-<article class="space-y-8">
-    <header class="text-center">
-        <h1 class="text-4xl font-bold mb-10">{{ .Title }}</h1>
+<article class="article-content">
+    <header class="page-header">
+        <h1 class="page-title">{{ .Title }}</h1>
         {{ with .Date }}
-        <time datetime="{{ .Format "2006-01-02" }}" class="text-gray-600 dark:text-gray-400 mt-10 block">
+        <time datetime="{{ .Format "2006-01-02" }}" class="page-date">
             {{ .Format "02/01/2006" }}
         </time>
         {{ end }}
@@ -18,34 +18,34 @@
     {{ if .Params.gallery }}
     <div id="gallery" class="gallery-grid">
         {{ range .Resources.Match "*.jpg" }}
-        <a 
-            href="{{ .RelPermalink }}" 
-            class="gallery-item"
-            data-src="{{ .RelPermalink }}"
-            data-sub-html="<h4>{{ .Name }}</h4>"
-        >
-            <img 
-                src="{{ .RelPermalink }}" 
-                alt="{{ .Name }}"
-                class="gallery-image"
-                loading="lazy"
+        <div class="gallery-item">
+            <a 
+                href="{{ .RelPermalink }}" 
+                data-src="{{ .RelPermalink }}"
+                data-sub-html="<div class='lightbox-content'>
+                    {{ partial "exif.html" . }}
+                </div>"
             >
-            <div class="gallery-caption">
-                {{ .Name }}
-            </div>
-        </a>
+                <img 
+                    src="{{ .RelPermalink }}" 
+                    alt="{{ .Name }}"
+                    class="gallery-image"
+                    loading="lazy"
+                >
+            </a>
+        </div>
         {{ end }}
     </div>
     {{ end }}
 
-    <div class="flex items-center space-x-4 justify-center">
+    <div class="pagination-container">
         {{ with .Site.RegularPages.Prev . }}
-            <a href="{{ .RelPermalink }}" class="px-4 py-2 bg-neutral-200 dark:bg-neutral-800 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-700">
+            <a href="{{ .RelPermalink }}" class="pagination-link">
                 &larr; {{ .Title }}
             </a>
         {{ end }}
         {{ with .Site.RegularPages.Next . }}
-            <a href="{{ .RelPermalink }}" class="px-4 py-2 bg-neutral-200 dark:bg-neutral-800 rounded-lg hover:bg-neutral-300 dark:hover:bg-neutral-700">
+            <a href="{{ .RelPermalink }}" class="pagination-link">
                 {{ .Title }} &rarr;
             </a>
         {{ end }}
