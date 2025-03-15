@@ -90,20 +90,43 @@
                 counter: true,
                 mousewheel: true,
                 // Disposition des contrôles
-                controls: true,
+                controls: window.innerWidth > 768, // Afficher les flèches uniquement sur les écrans > 768px
                 thumbnail: false,
                 showCloseIcon: true,
                 showMaximizeIcon: false,
                 actualSize: false,
                 fullScreen: true,
                 addClass: 'lg-custom-thumbnails',
+                // Activer le swipe
+                enableSwipe: true,
+                enableDrag: true,
+                swipeThreshold: 50,
                 // Configuration mobile
                 mobileSettings: {
-                    controls: true,
+                    controls: false, // Pas de flèches sur mobile
                     showCloseIcon: true,
-                    download: true
+                    download: true,
+                    swipeThreshold: 30 // Swipe plus sensible sur mobile
                 }
             });
+            
+            // Ajuster les contrôles lors du redimensionnement de la fenêtre
+            window.addEventListener('resize', function() {
+                if (lg) {
+                    lg.refresh();
+                    // Mettre à jour l'affichage des contrôles en fonction de la taille de l'écran
+                    const showControls = window.innerWidth > 768;
+                    if (lg.outer) {
+                        const prevBtn = lg.outer.querySelector('.lg-prev');
+                        const nextBtn = lg.outer.querySelector('.lg-next');
+                        if (prevBtn && nextBtn) {
+                            prevBtn.style.display = showControls ? 'block' : 'none';
+                            nextBtn.style.display = showControls ? 'block' : 'none';
+                        }
+                    }
+                }
+            });
+
         });
         {{ end }}
     </script>

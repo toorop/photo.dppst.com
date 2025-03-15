@@ -250,4 +250,54 @@
   .lg-outer.lg-hide-items .lg-actions .lg-next {
     opacity: 0;
   }
+
+  /* Styles de base pour les flèches de navigation */
+  .lg-actions .lg-next, 
+  .lg-actions .lg-prev {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+  }
+
+  .lg-actions .lg-next:hover, 
+  .lg-actions .lg-prev:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+  }
+
+  /* Styles spécifiques pour desktop */
+  @media (min-width: 769px) {
+    .lg-actions .lg-next {
+      right: -15px;
+    }
+    
+    .lg-actions .lg-prev {
+      left: -15px;
+    }
+    
+    .lg-outer .lg-inner {
+      padding: 0 30px;
+    }
+  }
+
+  /* Styles spécifiques pour mobile */
+  @media (max-width: 768px) {
+    .lg-actions .lg-prev,
+    .lg-actions .lg-next {
+      display: none !important;
+    }
+    
+    .lg-outer .lg-item {
+      width: 100%;
+    }
+    
+    .lg-outer .lg-inner {
+      padding: 0;
+    }
+    
+    .lg-outer {
+      touch-action: pan-y;
+    }
+  }
 }
