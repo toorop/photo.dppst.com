@@ -18,22 +18,26 @@
     {{ if .Params.gallery }}
     <div id="gallery" class="gallery-grid">
         {{ range .Resources.Match "*.jpg" }}
-        <div class="gallery-item">
-            <a 
-                href="{{ .RelPermalink }}" 
-                data-src="{{ .RelPermalink }}"
-                data-sub-html="<div class='lightbox-content'>
-                    {{ partial "exif.html" . }}
-                </div>"
-            >
-                <img 
-                    src="{{ .RelPermalink }}" 
-                    alt="{{ .Name }}"
-                    class="gallery-image"
-                    loading="lazy"
+            {{ $image := . }}
+            {{ $dimensions := $image.Resize "1x1" }}
+            {{ $placeholder := $image.Resize "10x q1" }}
+            {{ $thumbnail := $image.Resize "800x" }}
+
+            <div class="gallery-item" data-width="{{ $dimensions.Width }}" data-height="{{ $dimensions.Height }}">
+                <a 
+                    href="{{ $image.RelPermalink }}" 
+                    data-sub-html="<div class='lightbox-content'>{{ partial "exif.html" . }}</div>"
                 >
-            </a>
-        </div>
+                    <img 
+                        src="{{ $placeholder.RelPermalink }}" 
+                        data-src="{{ $thumbnail.RelPermalink }}" 
+                        width="{{ $dimensions.Width }}" 
+                        height="{{ $dimensions.Height }}" 
+                        class="placeholder gallery-image"
+                        alt="{{ $image.Name }}"
+                    >
+                </a>
+            </div>
         {{ end }}
     </div>
     {{ end }}

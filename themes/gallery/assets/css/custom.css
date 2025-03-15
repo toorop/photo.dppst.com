@@ -1,0 +1,29 @@
+/* Styles pour les placeholders d'images */
+.placeholder {
+    filter: blur(10px);
+    transition: filter 0.3s ease-out;
+}
+
+.placeholder.loaded {
+    filter: blur(0);
+}
+
+/* Cacher les éléments EXIF pour lightgallery */
+.hidden {
+    display: none;
+}
+
+/* Styles pour les métadonnées EXIF dans lightgallery sur mobile */
+@media (max-width: 768px) {
+    .lg-sub-html {
+        font-size: 10px !important;
+    }
+    
+    .lg-sub-html .exif-label {
+        font-weight: 500 !important;
+    }
+    
+    .lg-sub-html .exif-data {
+        line-height: 1.3 !important;
+    }
+} 

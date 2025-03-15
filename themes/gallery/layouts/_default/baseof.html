@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lightgallery.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lg-autoplay.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.1/css/lg-fullscreen.min.css">
+    <link rel="stylesheet" href="/css/custom.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/masonry/4.2.2/masonry.pkgd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
     {{ end }}
@@ -63,12 +64,49 @@
         });
 
         {{ if .Params.gallery }}
-        // Initialize Masonry
         document.addEventListener('DOMContentLoaded', function() {
             const grid = document.querySelector('.gallery-grid');
-            // Initialize Masonry after all images are loaded
+            
+            // Configurer l'observateur d'intersection pour le lazy loading
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const dataSrc = img.getAttribute('data-src');
+                        if (dataSrc) {
+                            // Précharger l'image
+                            const tempImg = new Image();
+                            tempImg.onload = function() {
+                                // Remplacer le placeholder par l'image réelle
+                                img.src = dataSrc;
+                                img.classList.add('loaded');
+                                img.removeAttribute('data-src');
+                                
+                                // Informer Masonry que l'élément a changé
+                                if (masonry) {
+                                    masonry.layout();
+                                }
+                            };
+                            tempImg.src = dataSrc;
+                            
+                            // Ne plus observer cet élément
+                            observer.unobserve(img);
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '200px' // Précharger les images un peu avant qu'elles n'entrent dans la vue
+            });
+            
+            // Observer toutes les images avec data-src
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                observer.observe(img);
+            });
+            
+            // Initialiser Masonry avec les placeholders
+            let masonry = null;
             imagesLoaded(grid, function() {
-                const masonry = new Masonry(grid, {
+                masonry = new Masonry(grid, {
                     itemSelector: '.gallery-item',
                     columnWidth: '.gallery-item',
                     percentPosition: true,
