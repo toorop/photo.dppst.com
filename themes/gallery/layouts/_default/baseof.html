@@ -127,6 +127,22 @@
                 }
             });
 
+            // Ajouter un écouteur d'événement pour le moment où lightgallery s'ouvre
+            grid.addEventListener('lgAfterOpen', function() {
+                if (window.innerWidth <= 768) {
+                    const subHtml = document.querySelector('.lg-sub-html');
+                    if (subHtml) {
+                        subHtml.style.fontSize = '12px';
+                        
+                        // Appliquer aux éléments enfants également
+                        const elements = subHtml.querySelectorAll('*');
+                        elements.forEach(el => {
+                            el.style.fontSize = '12px';
+                        });
+                    }
+                }
+            });
+
         });
         {{ end }}
     </script>

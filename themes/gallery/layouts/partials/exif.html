@@ -1,6 +1,6 @@
 {{ with .Exif }}
 <div class="exif-container">
-    <div class="exif-data">
+    <div class="exif-data text-xs md:text-sm">
         {{ with .Tags.DateTimeOriginal }}
             {{ $parts := split . " " }}
             {{ if ge (len $parts) 2 }}
@@ -21,30 +21,30 @@
         {{ end }}
         
         {{ with .Tags.Make }}{{ with $.Exif.Tags.Model }}
-            <span><span class="exif-label">Appareil:</span> {{ $.Exif.Tags.Make }} {{ . }} -</span>
+            <span>{{ $.Exif.Tags.Make }} {{ . }} -</span>
         {{ end }}{{ end }}
         
         {{ with .Tags.FocalLength }}
             {{ if ne . "" }}
-                <span><span class="exif-label">Focale:</span> {{ math.Round (float . ) }}mm -</span>
+                <span>{{ math.Round (float . ) }}mm -</span>
             {{ end }}
         {{ end }}
         
         {{ with .Tags.FNumber }}
             {{ if ne . "" }}
-                <span><span class="exif-label">Ouverture:</span> f/{{ printf "%.1f" (float .) }} -</span>
+                <span> f/{{ printf "%.1f" (float .) }} -</span>
             {{ end }}
         {{ end }}
         
         {{ with .Tags.ExposureTime }}
             {{ if ne . "" }}
-                <span><span class="exif-label">Vitesse:</span> {{ . }} -</span>
+                <span> {{ . }} -</span>
             {{ end }}
         {{ end }}
         
         {{ with .Tags.ISOSpeedRatings }}
             {{ if ne . "" }}
-                <span><span class="exif-label">ISO:</span> {{ . }}</span>
+                <span>ISO: {{ . }}</span>
             {{ end }}
         {{ end }}
     </div>
