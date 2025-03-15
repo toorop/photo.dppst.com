@@ -78,7 +78,7 @@
             
             // Initialize lightgallery
             const lg = lightGallery(grid, {
-                selector: '.gallery-item a',
+                selector: '.gallery-item a:not(.gallery-link)',
                 plugins: [lgAutoplay, lgFullscreen],
                 // Options du diaporama
                 autoplay: true,
